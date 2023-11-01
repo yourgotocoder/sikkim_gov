@@ -13,11 +13,15 @@ const EditSubjects = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!subjectTitle || !subjectCode) return;
-    const subjectData: ISubject = { title: subjectTitle, code: subjectCode };
+    const subjectCodeVerified = subjectCode.trim().toLowerCase();
+    const subjectData: ISubject = {
+      title: subjectTitle,
+      code: subjectCodeVerified,
+    };
     try {
       const exists = await subjectsTable
         .where("code")
-        .equals(subjectCode)
+        .equals(subjectCodeVerified)
         .toArray();
       if (exists.length > 0) {
         alert("Subject Code already exists");
@@ -35,8 +39,7 @@ const EditSubjects = () => {
       const id = await subjectsTable.add(subjectData);
       setSubjectTitle("");
       setSubjectCode("");
-      console.log(id);
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleDelete = async (id) => {
@@ -83,7 +86,7 @@ const EditSubjects = () => {
             subjectsTableData.map((subject) => (
               <tr>
                 <td>{subject.title}</td>
-                <td>{subject.code}</td>
+                <td>{subject.code.toUpperCase()}</td>
                 <td>
                   <button
                     className={styles.districtButtonDelete}
