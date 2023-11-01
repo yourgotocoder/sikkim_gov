@@ -1,0 +1,44 @@
+.subject {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formArea {
+  margin-top: 10rem;
+}
+
+.subjectInput {
+  display: block;
+}
+
+.form {
+  display: flex;
+  margin-bottom: 2rem;
+}
+
+.formSubmit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+}
+
+.subjectButton {
+  background: green;
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+}
+
+.subjectButton:hover {
+  cursor: pointer;
+  background: darkgreen;
+  color: white;
+}
+
+.tableArea {
+  overflow-y: scroll;
+  max-height: 40rem;
+}

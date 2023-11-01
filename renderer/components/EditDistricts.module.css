@@ -1,0 +1,51 @@
+.district {
+  position: relative;
+  text-align: center;
+  min-height: 99vh;
+  border: 1px solid white;
+}
+
+.formArea {
+  margin-top: 10rem;
+  margin-bottom: 2rem;
+}
+
+.districtInput {
+  border-radius: 10px;
+  outline: none;
+  border: none;
+}
+
+.districtButton {
+  margin-left: 5px;
+  border-radius: 10px;
+  border: none;
+  background: black;
+  color: green;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.districtButton:hover {
+  background: green;
+  color: black;
+}
+
+.tableArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.districtButtonDelete {
+  background: black;
+  color: red;
+}
+
+.districtButtonDelete:hover {
+  background: red;
+  color: black;
+}
