@@ -9,7 +9,7 @@
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   background: #0d1117;
-  color: white;
+  color: #efeff0;
   font-family: "Noto Sans", "Courier New", Courier, monospace;
   margin: 0 auto;
   padding: 0;
