@@ -46,7 +46,9 @@ export const EditDistricts = () => {
         </form>
       </div>
       <div className={styles.tableArea}>
-        <h3>Total Districts: {districtTableData.length}</h3>
+        <h3>
+          Total Districts: {districtTableData && districtTableData.length}
+        </h3>
         <table border={1}>
           <tr>
             <th>District</th>
