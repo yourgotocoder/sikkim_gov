@@ -39,7 +39,7 @@ const EditSubjects = () => {
       const id = await subjectsTable.add(subjectData);
       setSubjectTitle("");
       setSubjectCode("");
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleDelete = async (id) => {
@@ -77,26 +77,32 @@ const EditSubjects = () => {
       </div>
       <div className={styles.tableArea}>
         <table border={1}>
-          <tr>
-            <th>Subject</th>
-            <th>Code</th>
-            <th>Actions</th>
-          </tr>
-          {subjectsTableData &&
-            subjectsTableData.map((subject) => (
-              <tr>
-                <td>{subject.title}</td>
-                <td>{subject.code.toUpperCase()}</td>
-                <td>
-                  <button
-                    className={styles.districtButtonDelete}
-                    onClick={async () => await handleDelete(subject.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Code</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {subjectsTableData &&
+              subjectsTableData.map((subject) => (
+                <tr key={subject.id}>
+                  <td className={styles.tdItem}>{subject.title}</td>
+                  <td className={styles.tdItem}>
+                    {subject.code.toUpperCase()}
+                  </td>
+                  <td className={styles.tdItem}>
+                    <button
+                      className={styles.subjectButtonDelete}
+                      onClick={async () => await handleDelete(subject.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
         </table>
       </div>
     </div>

@@ -26,6 +26,7 @@
 
 .subjectButton {
   background: green;
+  height: 2rem;
   color: white;
   outline: none;
   border: none;
@@ -41,4 +42,19 @@
 .tableArea {
   overflow-y: scroll;
   max-height: 40rem;
+}
+
+.tdItem {
+  min-width: 4rem;
+  text-align: center;
+}
+
+.subjectButtonDelete {
+  background: black;
+  color: red;
+}
+
+.subjectButtonDelete:hover {
+  background: red;
+  color: black;
 }

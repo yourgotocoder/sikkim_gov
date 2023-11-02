@@ -50,24 +50,30 @@ export const EditDistricts = () => {
           Total Districts: {districtTableData && districtTableData.length}
         </h3>
         <table border={1}>
-          <tr>
-            <th>District</th>
-            <th>Actions</th>
-          </tr>
-          {districtTableData &&
-            districtTableData.map((district) => (
-              <tr>
-                <td>{district.name.toUpperCase()}</td>
-                <td>
-                  <button
-                    className={styles.districtButtonDelete}
-                    onClick={async () => await handleDelete(district.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
+          <thead>
+            <tr>
+              <th>District</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {districtTableData &&
+              districtTableData.map((district) => (
+                <tr key={district.name}>
+                  <td className={styles.minWidth}>
+                    {district.name.toUpperCase()}
+                  </td>
+                  <td className={styles.tdItem}>
+                    <button
+                      className={styles.districtButtonDelete}
+                      onClick={async () => await handleDelete(district.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
         </table>
       </div>
     </div>

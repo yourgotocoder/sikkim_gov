@@ -11,17 +11,20 @@
 }
 
 .districtInput {
-  border-radius: 10px;
+  border-radius: 5px;
+  height: 2rem;
+  padding-left: 5px;
   outline: none;
   border: none;
 }
 
 .districtButton {
   margin-left: 5px;
-  border-radius: 10px;
+  border-radius: 8px;
   border: none;
-  background: black;
-  color: green;
+  background: green;
+  color: white;
+  height: 2rem;
   padding: 5px;
   cursor: pointer;
 }
@@ -48,4 +51,13 @@
 .districtButtonDelete:hover {
   background: red;
   color: black;
+}
+
+.tdItem {
+  min-width: 5rem;
+  text-align: center;
+}
+
+.minWidth {
+  min-width: 8rem;
 }

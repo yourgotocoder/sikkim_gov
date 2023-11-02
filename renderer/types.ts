@@ -8,3 +8,17 @@ export interface ISubject {
   title: string;
   code: string;
 }
+
+interface SubjectData {
+  value: string;
+  label: string;
+}
+
+export interface ISchool {
+  id?: number;
+  name: string;
+  code: string;
+  district: string;
+  contactno: string;
+  subjects: SubjectData[];
+}
