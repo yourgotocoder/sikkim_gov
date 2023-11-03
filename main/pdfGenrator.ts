@@ -4,7 +4,12 @@ const pdf = require("pdfkit-table");
 
 export function generatePdf(schoolCode, rows) {
   const doc = new pdf({ font: "Times-Roman", size: "A3" });
-  doc.pipe(fs.createWriteStream(`${schoolCode}.pdf`));
+  if (!fs.existsSync(path.join(__dirname, "result"))) {
+    fs.mkdirSync(path.join(__dirname, "result"));
+  }
+  doc.pipe(
+    fs.createWriteStream(path.join(__dirname, "result", `${schoolCode}.pdf`)),
+  );
   doc
     .fontSize(14)
     .font("Helvetica-Bold")

@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "Examiner Allocator",
-  "description": "Examiner Allocator",
+  "name": "examiner_allocator",
+  "description": "examiner_allocator",
   "version": "1.0.0",
   "author": "Sudarshan Rai",
   "main": "app/background.js",

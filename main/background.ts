@@ -2,7 +2,7 @@ import path from "path";
 import { app, ipcMain } from "electron";
 import serve from "electron-serve";
 import { createWindow } from "./helpers";
-import { External_Allocator } from "./solution";
+import { externalAllocator } from "./solution";
 import { generatePdf } from "./pdfGenrator";
 
 const isProd = process.env.NODE_ENV === "production";
@@ -43,12 +43,11 @@ ipcMain.on("message", async (event, arg) => {
 });
 
 ipcMain.on("generate-pdf", async (event, arg) => {
-  const preProcessedData = External_Allocator(
+  const preProcessedData = externalAllocator(
     arg.district,
     arg.subject,
     arg.school,
   );
-  console.log(preProcessedData, arg.subject, arg.school);
   for (let schoolData in preProcessedData) {
     const finalData = [];
     for (let subs in preProcessedData[schoolData]) {
@@ -68,7 +67,6 @@ ipcMain.on("generate-pdf", async (event, arg) => {
       temp.push(schoolToData.contactno.toUpperCase());
       finalData.push(temp);
     }
-    console.log(finalData);
     generatePdf(schoolData, finalData);
   }
   event.reply("generate-pdf", `PDF's generated`);
