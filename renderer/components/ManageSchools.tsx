@@ -53,7 +53,11 @@ const ManageSchools = () => {
       subjects: subjects,
     });
     setAddingSchool(false);
-    console.log(schoolsTableData);
+    setSchoolName("");
+    setSchoolCode("");
+    setDistrict("");
+    setSubjects([]);
+    setSchoolContact("");
   };
 
   const viewSchool = (school: ISchool) => {
@@ -80,14 +84,13 @@ const ManageSchools = () => {
   );
 
   const [subjectsData, setSubjectsData] = useState([]);
-  useEffect(() => { }, [subjectsTableData]);
+  useEffect(() => {}, [subjectsTableData]);
   useEffect(() => {
     if (subjectsTableData) {
       const data = subjectsTableData.map((subjectValue) => ({
         value: subjectValue.code,
         label: subjectValue.title,
       }));
-      console.log(data);
       setSubjectsData(data);
     }
   }, [subjectsTableData]);
@@ -103,16 +106,31 @@ const ManageSchools = () => {
 
   const handleSubjectSelect = (e) => {
     setSubjects(e);
-    console.log(e);
+  };
+
+  const handleGenerate = () => {
+    console.log(schoolsTableData);
+    const data = {
+      district: districtsTableData,
+      subject: subjectsTableData,
+      school: schoolsTableData,
+    };
+    window.ipc.send("generate-pdf", data);
+    window.ipc.on("generate-pdf", (reply: string) => {
+      console.log(reply);
+    });
   };
 
   return (
     <div className={styles.manageSchools}>
       <div className={styles.formArea}>
         {!addingSchool && !isViewing && (
-          <button onClick={() => setAddingSchool(!addingSchool)}>
-            Add School
-          </button>
+          <>
+            <button onClick={() => setAddingSchool(!addingSchool)}>
+              Add School
+            </button>
+            <button onClick={handleGenerate}>Generate</button>
+          </>
         )}
         {addingSchool && !isViewing && (
           <div className={styles.form}>
@@ -164,7 +182,11 @@ const ManageSchools = () => {
                   onChange={handleSubjectSelect}
                 ></Select>
               )}
+
               <button type="submit">Submit</button>
+              <button type="button" onClick={() => setAddingSchool(false)}>
+                Cancel
+              </button>
             </form>
           </div>
         )}
