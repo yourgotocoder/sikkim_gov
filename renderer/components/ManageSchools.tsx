@@ -125,53 +125,65 @@ const ManageSchools = () => {
     <div className={styles.manageSchools}>
       <div className={styles.formArea}>
         {!addingSchool && !isViewing && (
-          <>
-            <button onClick={() => setAddingSchool(!addingSchool)}>
+          <div className={styles.actions}>
+            <button
+              onClick={() => setAddingSchool(!addingSchool)}
+              className={styles.actionButton}
+            >
               Add School
             </button>
-            <button onClick={handleGenerate}>Generate</button>
-          </>
+            <button
+              onClick={handleGenerate}
+              className={`${styles["ml-2"]} ${styles["actionButton"]} ${styles["bg-blue"]}`}
+            >
+              Generate
+            </button>
+          </div>
         )}
         {addingSchool && !isViewing && (
           <div className={styles.form}>
             <form onSubmit={handleSubmit}>
-              <label>
-                School Name:
-                <input
-                  type="text"
-                  value={schoolName}
-                  onChange={(e) => setSchoolName(e.target.value)}
-                />
-              </label>
-              <label>
-                School Code:
-                <input
-                  type="text"
-                  value={schoolCode}
-                  onChange={(e) => setSchoolCode(e.target.value)}
-                />
-              </label>
-              <label>
-                Contact Number:
-                <input
-                  type="number"
-                  value={schoolContact}
-                  onChange={(e) => setSchoolContact(e.target.value)}
-                />
-              </label>
-              <label>
-                District:
-                <select value={district} onChange={handleDistrictSelect}>
-                  <option value="none">Select a district</option>
+              <div className={styles.inputBlock}>
+                <label className={styles.inputArea}>
+                  School Name:
+                  <input
+                    type="text"
+                    value={schoolName}
+                    onChange={(e) => setSchoolName(e.target.value)}
+                  />
+                </label>
+                <label className={styles.inputArea}>
+                  School Code:
+                  <input
+                    type="text"
+                    value={schoolCode}
+                    onChange={(e) => setSchoolCode(e.target.value)}
+                  />
+                </label>
+              </div>
+              <div className={styles.inputBlock}>
+                <label className={styles.inputArea}>
+                  Contact Number:
+                  <input
+                    type="number"
+                    value={schoolContact}
+                    onChange={(e) => setSchoolContact(e.target.value)}
+                  />
+                </label>
+                <label className={styles.inputArea}>
+                  District:
+                  <select value={district} onChange={handleDistrictSelect}>
+                    <option value="none">Select a district</option>
 
-                  {districtsTableData &&
-                    districtsTableData.map((district) => (
-                      <option key={district.id} value={district.name}>
-                        {district.name.toUpperCase()}
-                      </option>
-                    ))}
-                </select>
-              </label>
+                    {districtsTableData &&
+                      districtsTableData.map((district) => (
+                        <option key={district.id} value={district.name}>
+                          {district.name.toUpperCase()}
+                        </option>
+                      ))}
+                  </select>
+                </label>
+              </div>
 
               {subjectsTableData && (
                 <Select
@@ -182,11 +194,18 @@ const ManageSchools = () => {
                   onChange={handleSubjectSelect}
                 ></Select>
               )}
-
-              <button type="submit">Submit</button>
-              <button type="button" onClick={() => setAddingSchool(false)}>
-                Cancel
-              </button>
+              <div className={styles.finalActionArea}>
+                <button type="submit" className={styles.actionButton}>
+                  Submit
+                </button>
+                <button
+                  type="button"
+                  className={`${styles["actionButton"]} ${styles["ml-2"]} ${styles["bg-danger"]}`}
+                  onClick={() => setAddingSchool(false)}
+                >
+                  Cancel
+                </button>
+              </div>
             </form>
           </div>
         )}
