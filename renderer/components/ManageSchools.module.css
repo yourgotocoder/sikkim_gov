@@ -74,3 +74,13 @@
   margin: 1rem;
   margin-top: 2rem;
 }
+
+.viewSchool {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid white;
+  width: 60%;
+  margin: auto;
+}

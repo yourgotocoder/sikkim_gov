@@ -22,6 +22,28 @@ const ManageSchools = () => {
   const [isViewing, setIsViewingSchool] = useState<boolean>(false);
   const [viewingSchoolData, setViewingSchoolData] = useState<ISchool>();
 
+  const districtsTableData = useLiveQuery(() => districtsTable.toArray(), []);
+  const subjectsTableData: ISubject[] = useLiveQuery(
+    () => subjectsTable.toArray(),
+    [],
+  );
+  const schoolsTableData: ISchool[] = useLiveQuery(
+    () => schoolsTable.toArray(),
+    [],
+  );
+
+  const [subjectsData, setSubjectsData] = useState([]);
+  useEffect(() => {}, [subjectsTableData]);
+  useEffect(() => {
+    if (subjectsTableData) {
+      const data = subjectsTableData.map((subjectValue) => ({
+        value: subjectValue.code,
+        label: subjectValue.title,
+      }));
+      setSubjectsData(data);
+    }
+  }, [subjectsTableData]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!schoolName) {
@@ -47,6 +69,13 @@ const ManageSchools = () => {
 
     const schoolCodeVerified = schoolCode.trim().toLowerCase();
     const schoolNameVerified = schoolName.trim().toLowerCase();
+    const schoolCodeExistsinDB = schoolsTableData.find(
+      (school) => school.code === schoolCodeVerified,
+    );
+    if (schoolCodeExistsinDB) {
+      alert("School code already exists");
+      return;
+    }
 
     await schoolsTable.add({
       name: schoolNameVerified,
@@ -75,28 +104,6 @@ const ManageSchools = () => {
   const handleDelete = async (id) => {
     const deleted = await schoolsTable.delete(id);
   };
-
-  const districtsTableData = useLiveQuery(() => districtsTable.toArray(), []);
-  const subjectsTableData: ISubject[] = useLiveQuery(
-    () => subjectsTable.toArray(),
-    [],
-  );
-  const schoolsTableData: ISchool[] = useLiveQuery(
-    () => schoolsTable.toArray(),
-    [],
-  );
-
-  const [subjectsData, setSubjectsData] = useState([]);
-  useEffect(() => { }, [subjectsTableData]);
-  useEffect(() => {
-    if (subjectsTableData) {
-      const data = subjectsTableData.map((subjectValue) => ({
-        value: subjectValue.code,
-        label: subjectValue.title,
-      }));
-      setSubjectsData(data);
-    }
-  }, [subjectsTableData]);
 
   const handleDistrictSelect = (e) => {
     if (e.target.value === "none") {
@@ -281,34 +288,42 @@ const ManageSchools = () => {
       </div>
       <div className={styles.editSchool}>
         {!addingSchool && isViewing && (
-          <div>
-            <button type="button" onClick={handleViewCancel}>
+          <div className={styles.viewSchool}>
+            <Button
+              type="button"
+              onClick={handleViewCancel}
+              variant="contained"
+              color="error"
+              sx={{ marginTop: 2 }}
+            >
               Close
-            </button>
+            </Button>
             <h2>
               {" "}
-              {viewingSchoolData?.name} ({viewingSchoolData.code})
+              {viewingSchoolData?.name.toUpperCase()} ({viewingSchoolData.code})
             </h2>
             <h3>Contact No: {viewingSchoolData.contactno}</h3>
-            <h4> {viewingSchoolData.district.toUpperCase()}</h4>
-            <table border={1}>
-              <thead>
-                <tr>
-                  <td>Subject</td>
-                  <td>Code</td>
-                </tr>
-              </thead>
-              <tbody>
-                {viewingSchoolData.subjects.map((sub) => {
-                  return (
-                    <tr key={sub.label}>
-                      <td>{sub.label}</td>
-                      <td>{sub.value}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <h4> District: {viewingSchoolData.district.toUpperCase()}</h4>
+            <div className={styles.schoolTable}>
+              <table border={1}>
+                <thead>
+                  <tr>
+                    <td>Subject</td>
+                    <td>Code</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {viewingSchoolData.subjects.map((sub) => {
+                    return (
+                      <tr key={sub.label}>
+                        <td>{sub.label}</td>
+                        <td>{sub.value}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>
