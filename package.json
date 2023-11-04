@@ -11,10 +11,15 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.16",
+    "@mui/material": "^5.14.16",
     "dexie": "^3.2.4",
     "dexie-react-hooks": "^1.1.7",
     "electron-serve": "^1.1.0",
     "electron-store": "^8.1.0",
+    "open-file-explorer": "^1.0.2",
     "pdfkit": "^0.13.0",
     "pdfkit-table": "^0.1.99",
     "react-select": "^5.7.7"

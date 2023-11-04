@@ -4,6 +4,8 @@ import serve from "electron-serve";
 import { createWindow } from "./helpers";
 import { externalAllocator } from "./solution";
 import { generatePdf } from "./pdfGenrator";
+import { homedir } from "os";
+import { exec } from "child_process";
 
 const isProd = process.env.NODE_ENV === "production";
 
@@ -69,5 +71,14 @@ ipcMain.on("generate-pdf", async (event, arg) => {
     }
     generatePdf(schoolData, finalData);
   }
-  event.reply("generate-pdf", `PDF's generated`);
+  const homeDir = homedir();
+  const desktopPath = path.join(homeDir, "Desktop");
+  const resultPath = path.join(desktopPath, "result");
+  exec(`open ${resultPath}`, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`exec error: ${error}`);
+      return;
+    }
+  });
+  event.reply("generate-pdf", `PDFs generated`);
 });

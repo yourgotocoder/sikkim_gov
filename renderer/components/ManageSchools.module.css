@@ -1,3 +1,8 @@
+.form {
+  display: flex;
+  justify-content: center;
+}
+
 .manageSchools {
   padding: 2rem;
 }
@@ -5,7 +10,9 @@
 .select {
   background-color: black;
   color: black;
+  margin-left: 1rem;
   margin-botton: 1rem;
+  width: 30rem;
 }
 
 .actions {
@@ -51,6 +58,8 @@
   margin: 0 auto;
   display: flex;
   justify-content: center;
+  max-height: 70vh;
+  overflow-y: scroll;
 }
 
 .inputArea {
@@ -62,7 +71,6 @@
 }
 
 .finalActionArea {
-  margin: 2rem;
-  display: flex;
-  justify-content: center;
+  margin: 1rem;
+  margin-top: 2rem;
 }

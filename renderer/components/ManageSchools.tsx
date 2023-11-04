@@ -8,6 +8,9 @@ import {
   schoolsTable,
 } from "../database.config";
 import { useLiveQuery } from "dexie-react-hooks";
+import { Button, Chip, TextField, Tooltip } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 const ManageSchools = () => {
   const [addingSchool, setAddingSchool] = useState<boolean>(false);
@@ -84,7 +87,7 @@ const ManageSchools = () => {
   );
 
   const [subjectsData, setSubjectsData] = useState([]);
-  useEffect(() => {}, [subjectsTableData]);
+  useEffect(() => { }, [subjectsTableData]);
   useEffect(() => {
     if (subjectsTableData) {
       const data = subjectsTableData.map((subjectValue) => ({
@@ -126,52 +129,72 @@ const ManageSchools = () => {
       <div className={styles.formArea}>
         {!addingSchool && !isViewing && (
           <div className={styles.actions}>
-            <button
+            <Button
               onClick={() => setAddingSchool(!addingSchool)}
-              className={styles.actionButton}
+              variant="contained"
             >
               Add School
-            </button>
-            <button
-              onClick={handleGenerate}
-              className={`${styles["ml-2"]} ${styles["actionButton"]} ${styles["bg-blue"]}`}
-            >
-              Generate
-            </button>
+            </Button>
+            {schoolsTableData && (
+              <Tooltip
+                title={
+                  schoolsTableData.length === 0
+                    ? "Please add schools"
+                    : "Click to generate pdfs"
+                }
+              >
+                <Button
+                  onClick={handleGenerate}
+                  variant="outlined"
+                  sx={{ marginLeft: 2 }}
+                  disabled={schoolsTableData.length === 0}
+                >
+                  Generate
+                </Button>
+              </Tooltip>
+            )}
+            {schoolsTableData && (
+              <Chip
+                label={`Total Schools: ${schoolsTableData.length}`}
+                sx={{ marginLeft: 2 }}
+              ></Chip>
+            )}
           </div>
         )}
         {addingSchool && !isViewing && (
           <div className={styles.form}>
             <form onSubmit={handleSubmit}>
               <div className={styles.inputBlock}>
-                <label className={styles.inputArea}>
-                  School Name:
-                  <input
-                    type="text"
-                    value={schoolName}
-                    onChange={(e) => setSchoolName(e.target.value)}
-                  />
-                </label>
-                <label className={styles.inputArea}>
-                  School Code:
-                  <input
-                    type="text"
-                    value={schoolCode}
-                    onChange={(e) => setSchoolCode(e.target.value)}
-                  />
-                </label>
+                <TextField
+                  label="School Name"
+                  type="text"
+                  variant="outlined"
+                  value={schoolName}
+                  color="primary"
+                  onChange={(e) => setSchoolName(e.target.value)}
+                  required
+                />
+                <TextField
+                  label="School Code"
+                  type="text"
+                  variant="outlined"
+                  value={schoolCode}
+                  onChange={(e) => setSchoolCode(e.target.value)}
+                  sx={{ marginLeft: 2 }}
+                  required
+                />
+                <TextField
+                  label="Contact No"
+                  type="number"
+                  variant="outlined"
+                  value={schoolContact}
+                  onChange={(e) => setSchoolContact(e.target.value)}
+                  sx={{ marginLeft: 2 }}
+                />
               </div>
               <div className={styles.inputBlock}>
                 <label className={styles.inputArea}>
-                  Contact Number:
-                  <input
-                    type="number"
-                    value={schoolContact}
-                    onChange={(e) => setSchoolContact(e.target.value)}
-                  />
-                </label>
-                <label className={styles.inputArea}>
-                  District:
+                  District: {"  "}
                   <select value={district} onChange={handleDistrictSelect}>
                     <option value="none">Select a district</option>
 
@@ -195,16 +218,17 @@ const ManageSchools = () => {
                 ></Select>
               )}
               <div className={styles.finalActionArea}>
-                <button type="submit" className={styles.actionButton}>
+                <Button type="submit" variant="contained">
                   Submit
-                </button>
-                <button
+                </Button>
+                <Button
                   type="button"
-                  className={`${styles["actionButton"]} ${styles["ml-2"]} ${styles["bg-danger"]}`}
                   onClick={() => setAddingSchool(false)}
+                  variant="outlined"
+                  sx={{ marginLeft: 2 }}
                 >
                   Cancel
-                </button>
+                </Button>
               </div>
             </form>
           </div>
@@ -233,12 +257,21 @@ const ManageSchools = () => {
                     <td>{schoolItem.district.toUpperCase()}</td>
                     <td>{schoolItem.subjects.length}</td>
                     <td>
-                      <button onClick={async () => handleDelete(schoolItem.id)}>
-                        Delete X
-                      </button>
-                      <button onClick={() => viewSchool(schoolItem)}>
-                        View
-                      </button>
+                      <Button
+                        onClick={() => viewSchool(schoolItem)}
+                        variant="outlined"
+                        color="primary"
+                        sx={{ marginRight: 1 }}
+                      >
+                        <VisibilityIcon />
+                      </Button>
+                      <Button
+                        onClick={async () => handleDelete(schoolItem.id)}
+                        variant="contained"
+                        color="error"
+                      >
+                        <DeleteForeverIcon />
+                      </Button>
                     </td>
                   </tr>
                 ))}

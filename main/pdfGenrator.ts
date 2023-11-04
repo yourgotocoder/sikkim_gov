@@ -1,20 +1,23 @@
 const fs = require("fs");
 const path = require("path");
 const pdf = require("pdfkit-table");
+const os = require("os");
 
 export function generatePdf(schoolCode, rows) {
+  const homeDir = os.homedir();
+  const desktopPath = path.join(homeDir, "Desktop");
   const doc = new pdf({ font: "Times-Roman", size: "A3" });
-  if (!fs.existsSync(path.join(__dirname, "result"))) {
-    fs.mkdirSync(path.join(__dirname, "result"));
+  if (!fs.existsSync(path.join(desktopPath, "result"))) {
+    fs.mkdirSync(path.join(desktopPath, "result"));
   }
   doc.pipe(
-    fs.createWriteStream(path.join(__dirname, "result", `${schoolCode}.pdf`)),
+    fs.createWriteStream(path.join(desktopPath, "result", `${schoolCode}.pdf`)),
   );
   doc
     .fontSize(14)
     .font("Helvetica-Bold")
     .text(
-      `AISSCE PRACTICAL EXTERNALS FOR ${"SCHOOL NAME VERY LONG EXAMPLE LOREM IPSUM"}`,
+      `AISSCE PRACTICAL EXTERNALS FOR ${schoolCode.toUpperCase()}`,
       70,
       20,
       { align: "center" },
@@ -23,15 +26,15 @@ export function generatePdf(schoolCode, rows) {
   (function() {
     const table = {
       title: `${schoolCode}`,
-      subtitle: "Prepared by:JD/Exams",
+      subtitle: "",
       headers: [
         "CODE",
         "SUBJECT",
         "SCHOOL(FROM)",
-        "CODE",
+        "SCHOOL CODE(FROM)",
         "MOBILE NO",
         "SCHOOL(TO)",
-        "CODE",
+        "SCHOOL CODE(FROM)",
         "MOBILE NO",
       ],
       rows: rows,

@@ -3,6 +3,8 @@ import styles from "./EditDistricts.module.css";
 import { districtsTable } from "../database.config";
 import { IDistrict } from "../types";
 import { useLiveQuery } from "dexie-react-hooks";
+import { Button, TextField } from "@mui/material";
+import DeleteForever from "@mui/icons-material/DeleteForever";
 
 export const EditDistricts = () => {
   const [district, setDistrict] = useState("");
@@ -36,13 +38,16 @@ export const EditDistricts = () => {
     <div className={styles.district}>
       <div className={styles.formArea}>
         <form onSubmit={handleSubmit}>
-          <input
+          <TextField
             className={styles.districtInput}
-            placeholder="Add District Here"
+            label="Add District Here"
             onChange={(e) => setDistrict(e.target.value)}
             value={district}
+            variant="filled"
           />
-          <button className={styles.districtButton}>Add District</button>
+          <Button variant="outlined" sx={{ marginLeft: 2, marginTop: 1 }}>
+            Add District
+          </Button>
         </form>
       </div>
       <div className={styles.tableArea}>
@@ -64,12 +69,11 @@ export const EditDistricts = () => {
                     {district.name.toUpperCase()}
                   </td>
                   <td className={styles.tdItem}>
-                    <button
-                      className={styles.districtButtonDelete}
+                    <Button
                       onClick={async () => await handleDelete(district.id)}
                     >
-                      Delete
-                    </button>
+                      <DeleteForever />
+                    </Button>
                   </td>
                 </tr>
               ))}

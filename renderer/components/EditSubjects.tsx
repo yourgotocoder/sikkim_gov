@@ -3,6 +3,8 @@ import styles from "./EditSubject.module.css";
 import { subjectsTable } from "../database.config";
 import { ISubject } from "../types";
 import { useLiveQuery } from "dexie-react-hooks";
+import { Button, TextField } from "@mui/material";
+import DeleteForever from "@mui/icons-material/DeleteForever";
 
 const EditSubjects = () => {
   const [subjectTitle, setSubjectTitle] = useState("");
@@ -51,27 +53,27 @@ const EditSubjects = () => {
       <div className={styles.formArea}>
         <form onSubmit={handleSubmit} className={styles.form}>
           <div>
-            <label>
-              Title:
-              <input
-                className={styles.subjectInput}
-                placeholder="Add Subject Title Here"
-                onChange={(e) => setSubjectTitle(e.target.value)}
-                value={subjectTitle}
-              />
-            </label>
-            <label>
-              Code:
-              <input
-                className={styles.subjectInput}
-                placeholder="Add Subject Code Here"
-                onChange={(e) => setSubjectCode(e.target.value)}
-                value={subjectCode}
-              />
-            </label>
+            <TextField
+              label="Subject Title"
+              placeholder="Add Subject Title Here"
+              onChange={(e) => setSubjectTitle(e.target.value)}
+              value={subjectTitle}
+              sx={{ marginRight: 1 }}
+              required
+            />
+
+            <TextField
+              label="Subject Code"
+              placeholder="Add Subject Code Here"
+              onChange={(e) => setSubjectCode(e.target.value)}
+              value={subjectCode}
+              required
+            />
           </div>
           <div className={styles.formSubmit}>
-            <button className={styles.subjectButton}>Add Subject</button>
+            <Button variant="contained" type="submit">
+              Add Subject
+            </Button>
           </div>
         </form>
       </div>
@@ -93,12 +95,11 @@ const EditSubjects = () => {
                     {subject.code.toUpperCase()}
                   </td>
                   <td className={styles.tdItem}>
-                    <button
-                      className={styles.subjectButtonDelete}
+                    <Button
                       onClick={async () => await handleDelete(subject.id)}
                     >
-                      Delete
-                    </button>
+                      <DeleteForever />
+                    </Button>
                   </td>
                 </tr>
               ))}
